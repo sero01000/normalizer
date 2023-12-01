@@ -1,5 +1,13 @@
 # normalizer
 txt files normalizer
+```bash
+#By default use all filters
+#Example use:
+#Default config:
+normalizer -- file1.txt
+#Custom config:
+normalizer -c --split-min 1 --split-max 3 -l 0 --len-min 5 --len-max 33 -l 1 --len-min 7 --len-max 34 -o 0 -e 0 -a 1 -- file1.txt
+```
 
 ```bash
 Usage: normalizer [OPTIONS] -- <FILES>...
