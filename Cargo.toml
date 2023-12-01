@@ -1,0 +1,22 @@
+[package]
+name = "normalizer"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy-regex = "3"
+bytelines = "2"
+clap = { version = "4", features = ["derive"] }
+rayon = "1"
+
+[profile.release]
+codegen-units = 1
+debug = false
+debug-assertions = false
+lto = "fat"
+opt-level = 3
+panic = "abort"
+rpath = false
+strip = true
