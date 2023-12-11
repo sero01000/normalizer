@@ -5,7 +5,7 @@ use bytelines::*;
 use clap::Parser;
 use clap_args::{get_config_2, UserInput, WorkType};
 use hash_regex::{hash_types, HashType, MAIL_REGEX};
-use rayon::prelude::*;
+// use rayon::prelude::*;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufReader, ErrorKind, Write};
@@ -55,8 +55,16 @@ fn do_work(file_path: &PathBuf, work_types: &Vec<WorkType>) -> std::io::Result<(
         match line {
             Ok(line) => {
                 let mut line = String::from(String::from_utf8_lossy(&line));
-                let spliter = spliter_find(&line).unwrap_or("");
-                let mut items: Vec<String> = line.split(spliter).map(str::to_string).collect();
+                // let spliter = spliter_find(&line).unwrap_or("");
+                let mut items = match spliter_find(&line){
+                    Some(spliter)=>{
+                        line.split(spliter).map(str::to_string).collect()
+                    },
+                    None=>{
+                        vec![line.clone()]
+                    }
+                };
+                // let mut items: Vec<String> = line.split(spliter).map(str::to_string).collect();
 
                 let mut bad_type: Option<String> = None;
                 for work_type in work_types {
@@ -208,14 +216,15 @@ fn main() -> std::io::Result<()> {
     let config = get_config_2(&args);
     println!("{:?}", config);
 
-    args.files.par_iter().for_each(|file| {
-        match do_work(file, &config) {
-            Ok(_) => {}
-            Err(e) => {
-                println!("err:{:?} {:?}", e, file);
-            }
-        }
-    });
+    // args.files.par_iter().for_each(|file| {
+    //     match do_work(file, &config) {
+    //         Ok(_) => {}
+    //         Err(e) => {
+    //             println!("err:{:?} {:?}", e, file);
+    //         }
+    //     }
+    // });
+    do_work(&args.files[0], &config)?;
 
     Ok(())
 }
