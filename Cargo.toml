@@ -1,6 +1,6 @@
 [package]
 name = "normalizer"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -9,7 +9,6 @@ edition = "2021"
 lazy-regex = "3"
 bytelines = "2"
 clap = { version = "4", features = ["derive"] }
-rayon = "1"
 
 [profile.release]
 codegen-units = 1
